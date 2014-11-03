@@ -1,0 +1,33 @@
+---
+abstract: 'Simplified interface to SOAP::Data::Builder'
+author:
+  - 'Michael Jemmeson <mjemmeson@cpan.org>'
+build_requires:
+  Test::More: '0'
+configure_requires:
+  Module::Build::Tiny: '0.039'
+dynamic_config: 0
+generated_by: 'Dist::Milla version v1.0.5, Dist::Zilla version 5.015, CPAN::Meta::Converter version 2.141170'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: SOAP-Data-Builder-Simple
+no_index:
+  directory:
+    - t
+    - xt
+    - inc
+    - share
+    - eg
+    - examples
+requires:
+  List::Util: '0'
+  SOAP::Data::Builder: '0'
+  SOAP::Lite: '0'
+  base: '0'
+resources:
+  bugtracker: https://github.com/mjemmeson/SOAP-Data-Builder-Simple/issues
+  homepage: https://github.com/mjemmeson/SOAP-Data-Builder-Simple
+  repository: https://github.com/mjemmeson/SOAP-Data-Builder-Simple.git
+version: '0.01'
