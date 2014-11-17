@@ -22,12 +22,13 @@ no_index:
     - eg
     - examples
 requires:
-  List::Util: '0'
+  List::Util: '1.29'
   SOAP::Data::Builder: '0'
   SOAP::Lite: '0'
+  Safe::Isa: '0'
   base: '0'
 resources:
   bugtracker: https://github.com/mjemmeson/SOAP-Data-Builder-Simple/issues
   homepage: https://github.com/mjemmeson/SOAP-Data-Builder-Simple
   repository: https://github.com/mjemmeson/SOAP-Data-Builder-Simple.git
-version: '0.02'
+version: '0.03'

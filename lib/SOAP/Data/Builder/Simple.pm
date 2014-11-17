@@ -1,6 +1,6 @@
 package SOAP::Data::Builder::Simple;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use strict;
 use warnings;
@@ -9,6 +9,7 @@ use base 'Exporter';
 our @EXPORT_OK = qw( data header );
 
 use List::Util qw( pairs );
+use Safe::Isa;
 use SOAP::Lite;
 
 # So we can stop SOAP::Lite adding 'xsi:nil="true"'
@@ -45,25 +46,20 @@ sub _add {
 
         # underscore prefix - pass through to parent
         if ( $key =~ m{^_(.+)} ) {
-            $parent->$1($value);
+
+            if ( $1 eq 'value' ) {
+                _add_value( $parent, $value );
+            } else {
+                $parent->$1($value);
+            }
 
         } else {
 
             my $element = $is_header ? SOAP::Header->new : SOAP::Data->new;
+
             $element->name($key);
 
-            if ( ref $value eq 'ARRAY' ) {
-
-                $element->value(
-                    \SOAP::Data->value( _add( $element, $value ) ) )
-                    if @{$value};
-
-            } elsif ( !ref $value ) {
-
-                $element->value($value);
-            }
-
-            # ignore $value if hashref
+            _add_value( $element, $value );
 
             push @return, $element;
         }
@@ -71,6 +67,21 @@ sub _add {
     }
 
     return @return;
+}
+
+sub _add_value {
+    my ( $element, $value ) = @_;
+
+    if ( ref $value eq 'ARRAY' ) {
+        $element->value( \SOAP::Data->value( _add( $element, $value ) ) )
+            if @{$value};
+
+    } elsif ( $value->$_isa('SOAP::Data') ) {
+        $element->value( \$value );
+
+    } else {
+        $element->value($value);
+    }
 }
 
 1;
